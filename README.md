@@ -1,4 +1,4 @@
-#This is a basic implementation of the LinkedList in c++
+# This is a basic implementation of the LinkedList in c++
 
 ## BASIC USAGE:
 ```c++
@@ -22,7 +22,7 @@
 		display(list);
 	}
 ```
-##this will display the following:
+## this will display the following:
 size: 4
 1 2 3 4 
 size: 3
