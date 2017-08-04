@@ -6,10 +6,15 @@
 		std::cout << "size: " << list.size() << std::endl;
 		for (int i = 0; i < list.size(); i++) {
 			std::cout << list[i] << ' ';
-		}
+		}   
 		std::cout << std::endl;
 	}
-	int main() {
+	  int main() {
+		//Node test
+		Node<int> * n = new Node<int>;
+		Node<int> * n2 = new Node<int>;
+		n->value = 5;
+		n->next = n2;
 		LinkedList<int> list;
 		list.push_forward(2);
 		list.push_forward(1);
@@ -19,6 +24,11 @@
 		list.erase(0);
 		display(list);
 		list.erase(1, list.size()-1);
+		display(list);
+		list.push_back(4);
+		list.insert(3, 1);
+		list.push_forward(0);
+		list.setIndex(1, 0);
 		display(list);
 	}
 ```
