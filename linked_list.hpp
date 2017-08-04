@@ -5,10 +5,8 @@ class Node {
 	public:
 		Node() {};
 		~Node() {};
-		dataType value;
-		Node<dataType> * next;
-		dataType at(size_t);
-		Node<dataType> nodeAt(size_t);
+		dataType value;			//the value stored in the node
+		Node<dataType> * next;   	//the next node in the linkedlist
 };
 #endif
 
@@ -21,17 +19,21 @@ class LinkedList {
 	public:
 		LinkedList() {};
 		~LinkedList() {};
-		Node<dataType> * head;
-		size_t length = 0;
-		//functions
-		size_t size();
-		void push_forward(dataType);
-		void push_back(dataType);
-		void erase(size_t);
-		void erase(size_t, size_t);
-		dataType at(size_t);
+		size_t size(); //gets the size of the linkedlist
+		void push_forward(dataType); //adds an element to the begining of the list
+		void push_back(dataType);    //adds an element to the end of the list
+		void erase(size_t);          //erases an element at an index in the list
+		void erase(size_t, size_t);  //erases all element in the range of indices
+		void insert(dataType, size_t);//inserts an element at the given index
+		void setIndex(dataType, size_t); //sets the node at the index with a value
+		dataType at(size_t);	     //returns the value of the index
+		dataType operator[] (size_t index) {
+			return at(index);
+		}
 	private:
-		Node<dataType> * nodeAt(size_t);
+		Node<dataType> * nodeAt(size_t); //returns the node at the given index
+		Node<dataType> * head;           //the beginning of the list
+		size_t length = 0;               //the number of elements in the list
 };
 
 template<class dataType>
@@ -61,6 +63,13 @@ void LinkedList<dataType>::push_back(dataType newVal) {
 
 template<class dataType>
 void LinkedList<dataType>::erase(size_t index) {
+	if (index == 0) {
+		Node<dataType> * deleteAble = head;
+		head = nodeAt(1);
+		delete deleteAble;
+		length--;
+		return;
+	}
 	Node<dataType> * changeNext = nodeAt(index-1);
 	Node<dataType> * deleteAble = changeNext->next;
 	changeNext->next = deleteAble->next;
@@ -75,6 +84,23 @@ void LinkedList<dataType>::erase(size_t index1, size_t index2) {
 	}
 }
 template<class dataType>
+void LinkedList<dataType>::insert(dataType newVal, size_t index) {
+	Node<dataType> * before = nodeAt(index-1);
+	Node<dataType> * after = nodeAt(index);
+	Node<dataType> * newNode = new Node<dataType>;
+	newNode->value = newVal;
+	before->next = newNode;
+	newNode->next = after;
+	length++;
+}
+
+template<class dataType>
+void LinkedList<dataType>::setIndex(dataType newVal, size_t index) {
+	Node<dataType> * n = nodeAt(index);
+	n->value = newVal;
+}
+
+template<class dataType>
 Node<dataType> * LinkedList<dataType>::nodeAt(size_t index) {
 	Node<dataType> * curr = head;
 	for (int i = 0; i < index; i++) {
@@ -87,5 +113,4 @@ template<class dataType>
 dataType LinkedList<dataType>::at(size_t index) {
 	return nodeAt(index)->value;
 }
-
 #endif
